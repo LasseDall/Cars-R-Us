@@ -1,6 +1,9 @@
 package semester3.car.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Member {
   @Id
@@ -58,9 +64,6 @@ public class Member {
     this.street = street;
     this.city = city;
     this.zip = zip;
-  }
-
-  public Member() {
   }
 }
 
