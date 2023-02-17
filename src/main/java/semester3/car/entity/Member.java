@@ -46,6 +46,16 @@ public class Member {
   @UpdateTimestamp
   private LocalDateTime lastEdited;
 
+  @OneToMany(mappedBy = "member")
+  private List<Reservation> reservations;
+
+  public void addReservation(Reservation reservation) {
+    if (reservations == null) {
+      reservations = new ArrayList<>();
+    }
+    reservations.add(reservation);
+  }
+
   public void setFavoriteCarColors(List<String> favoriteCarColors) {
     this.favoriteCarColors = favoriteCarColors;
   }

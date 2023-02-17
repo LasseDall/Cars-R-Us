@@ -24,7 +24,13 @@ public class CarController {
 
   //ADMIN ONLY
   @GetMapping
-  List<CarResponse> getCars(){ return carService.getCars(true); }
+  List<CarResponse> getCars(){
+    return carService.getCars(true); }
+
+  @GetMapping("/brand/{brand}")
+  List<CarResponse> getCarsByBrand(@PathVariable String brand) {
+    return carService.getCarsByBrand(brand);
+  }
 
   //ADMIN
   @GetMapping(path = "/{id}")

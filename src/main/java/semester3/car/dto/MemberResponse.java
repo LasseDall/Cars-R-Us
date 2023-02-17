@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import semester3.car.entity.Member;
+import semester3.car.entity.Reservation;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,6 +31,8 @@ public class MemberResponse {
   Integer ranking;
   Boolean approved;
 
+  List<Reservation> reservations;
+
   //Convert Member Entity to Member DTO
   public MemberResponse(Member m, boolean includeAll) {
     this.username = m.getUsername();
@@ -43,6 +47,9 @@ public class MemberResponse {
       this.edited = m.getLastEdited();
       this.approved = m.isApproved();
       this.ranking = m.getRanking();
+    }
+    if (m.getReservations() != null) {
+      this.reservations = getReservations();
     }
   }
 }

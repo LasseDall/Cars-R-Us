@@ -78,4 +78,13 @@ class CarServiceTest {
     ResponseEntity<Boolean> testResponse = new ResponseEntity<Boolean>(true, HttpStatus.OK);
     assertEquals(testResponse, response);
   }
+
+  @Test
+  void getCarsByBrand() {
+    Car c1 = new Car("Toyota", "Yaris", 500.0, 200);
+    Mockito.when(carRepository.findAllByBrand("Toyota")).thenReturn(List.of(c1));
+    List<CarResponse> carResponses = carService.getCarsByBrand("Toyota");
+    assertEquals(1, carResponses.size());
+    assertEquals(c1.getModel(), carResponses.get(0).getModel());
+  }
 }

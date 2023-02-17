@@ -4,10 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import semester3.car.dto.CarRequest;
-import semester3.car.dto.CarResponse;
-import semester3.car.dto.MemberRequest;
-import semester3.car.dto.MemberResponse;
+import semester3.car.dto.*;
 import semester3.car.entity.Car;
 import semester3.car.entity.Member;
 import semester3.car.repository.CarRepository;
@@ -65,6 +62,11 @@ public class CarService {
   public void deleteCarById(int id) {
     Car deleteCar = carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
     carRepository.delete(deleteCar);
+  }
+
+  public List<CarResponse> getCarsByBrand(String brand) {
+    List<CarResponse> carResponses = carRepository.findAllByBrand(brand).stream().map(c->new CarResponse(c, true)).toList();
+    return carResponses;
   }
 }
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List of Cars</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Price per day</th>
+        <th>Best discount</th>
+    </tr>
+    </thead>
+    <tbody id="carTableBody">
+    </tbody>
+</table>
+
+<script>
+    const carTableBody = document.getElementById('carTableBody');
+
+    fetch('http://localhost:8080/api/cars')
+        .then(response => response.json())
+        .then(cars => {
+            cars.forEach(car => {
+                const row = document.createElement('tr');
+                const brandCell = document.createElement('td');
+                const modelCell = document.createElement('td');
+                const pricePrDayCell = document.createElement('td');
+                const bestDiscountCell = document.createElement('td');
+
+                brandCell.textContent = car.brand;
+                modelCell.textContent = car.model;
+                pricePrDayCell.textContent = car.pricePrDay;
+                bestDiscountCell.textContent = car.bestDiscount;
+
+                row.appendChild(brandCell);
+                row.appendChild(modelCell);
+                row.appendChild(pricePrDayCell);
+                row.appendChild(bestDiscountCell);
+
+                carTableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error(error));
+</script>
+</body>
+</html>

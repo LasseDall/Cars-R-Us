@@ -8,7 +8,6 @@ import semester3.car.entity.Member;
 @Getter
 @Setter
 @NoArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberRequest {
   String username;
   String email;

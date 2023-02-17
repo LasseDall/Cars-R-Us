@@ -5,9 +5,13 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
 import semester3.car.entity.Car;
 import semester3.car.entity.Member;
+import semester3.car.entity.Reservation;
 import semester3.car.repository.CarRepository;
 import semester3.car.repository.MemberRepository;
+import semester3.car.repository.ReservationRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,10 +22,12 @@ public class DeveloperData implements ApplicationRunner {
 
   private CarRepository carRepository;
   private MemberRepository memberRepository;
+  private ReservationRepository reservationRepository;
 
-  public DeveloperData(CarRepository carRepository, MemberRepository memberRepository) {
+  public DeveloperData(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
     this.carRepository = carRepository;
     this.memberRepository = memberRepository;
+    this.reservationRepository = reservationRepository;
   }
 
   @Override
@@ -32,7 +38,6 @@ public class DeveloperData implements ApplicationRunner {
     cars.add(new Car("Fiat", "Punto", 400.0, 300));
     cars.add(new Car("Citroen", "Berlingo", 600.0, 500));
 
-    carRepository.saveAll(cars);
 
 
     ArrayList<Member> members = new ArrayList<>();
@@ -52,6 +57,7 @@ public class DeveloperData implements ApplicationRunner {
     colors2.add("blå");
     members.get(2).setFavoriteCarColors(colors2);
 
+
     Map<String, String> phoneNumbers = new HashMap<>();
     Map<String, String> phoneNumbers1 = new HashMap<>();
     Map<String, String> phoneNumbers2 = new HashMap<>();
@@ -66,5 +72,15 @@ public class DeveloperData implements ApplicationRunner {
     members.get(2).setPhones(phoneNumbers2);
 
     memberRepository.saveAll(members);
+    carRepository.saveAll(cars);
+
+    Reservation reservation = new Reservation(LocalDate.of(2023, 11, 30), members.get(0), cars.get(0));
+    Reservation reservation2 = new Reservation(LocalDate.of(2023, 10, 11), members.get(1), cars.get(0));
+    reservationRepository.save(reservation);
+    reservationRepository.save(reservation2);
+
+
+
+
   }
 }

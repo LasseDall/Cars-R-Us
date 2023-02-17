@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,6 +37,16 @@ public class Car {
 
   @UpdateTimestamp
   private LocalDateTime lastEdited;
+
+  @OneToMany(mappedBy = "car")
+  private List<Reservation> reservations;
+
+  public void addReservation(Reservation reservation) {
+    if (reservations == null) {
+      reservations = new ArrayList<>();
+    }
+    reservations.add(reservation);
+  }
 
   public Car(String brand, String model, Double pricePrDay, int bestDiscount) {
     this.brand = brand;

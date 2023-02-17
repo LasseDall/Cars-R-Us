@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import semester3.car.dto.MemberRequest;
 import semester3.car.dto.MemberResponse;
+import semester3.car.dto.ReservationResponse;
 import semester3.car.entity.Member;
 import semester3.car.repository.MemberRepository;
 import semester3.car.service.MemberService;
@@ -28,7 +29,7 @@ class MemberController {
   List<MemberResponse> getMembers(){ return memberService.getMembers(false);}
 
   //ADMIN
-  @GetMapping(path = "/{username}")
+  @GetMapping("/{username}")
   MemberResponse getMemberById(@PathVariable String username) throws Exception {return memberService.findMemberByUsername(username);}
 
   //ANONYMOUS
