@@ -29,14 +29,14 @@ public class CarService {
 
   public CarResponse findCarById(int id) {
     Car car = carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
-    return new CarResponse(car, false);
+    return new CarResponse(car, true);
   }
 
   public CarResponse addCar(CarRequest carRequest) {
     Car newCar = CarRequest.getCarEntity(carRequest);
     newCar = carRepository.save(newCar);
 
-    return new CarResponse(newCar, false);
+    return new CarResponse(newCar, true);
   }
 
   public ResponseEntity<Boolean> updateCar(int id, CarRequest carRequest) {
