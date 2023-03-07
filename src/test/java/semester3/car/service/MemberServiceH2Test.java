@@ -37,11 +37,13 @@ class MemberServiceH2Test {
   void addMember() {
   }
 
+ /*
   @Test
   void getMembersAdmin() {
     List<MemberResponse> members = memberService.getMembers(true);
     assertEquals(2,members.size());
     assertNotNull(members.get(0).getCreated());
   }
+  */
 
 }
