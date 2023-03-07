@@ -9,6 +9,9 @@ import semester3.car.entity.Reservation;
 import semester3.car.repository.CarRepository;
 import semester3.car.repository.MemberRepository;
 import semester3.car.repository.ReservationRepository;
+import semester3.car.security.entity.Role;
+import semester3.car.security.entity.UserWithRoles;
+import semester3.car.security.repository.UserWithRolesRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,11 +26,15 @@ public class DeveloperData implements ApplicationRunner {
   private CarRepository carRepository;
   private MemberRepository memberRepository;
   private ReservationRepository reservationRepository;
+  private UserWithRolesRepository userWithRolesRepository;
+  final String passwordUsedByAll = "test12";
 
-  public DeveloperData(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
+
+  public DeveloperData(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository, UserWithRolesRepository userWithRolesRepository) {
     this.carRepository = carRepository;
     this.memberRepository = memberRepository;
     this.reservationRepository = reservationRepository;
+    this.userWithRolesRepository = userWithRolesRepository;
   }
 
   @Override
@@ -38,12 +45,14 @@ public class DeveloperData implements ApplicationRunner {
     cars.add(new Car("Fiat", "Punto", 400.0, 300));
     cars.add(new Car("Citroen", "Berlingo", 600.0, 500));
 
-
-
     ArrayList<Member> members = new ArrayList<>();
-    members.add(new Member("Lasse", "1234", "ll@live.dk", "Lasse", "Dall", "Højgade", "København S", "2300"));
-    members.add(new Member("Jørgen", "jørgen2", "jørgen@live.dk", "Jørgen", "Jørgensen", "Bredgade", "København K", "2100"));
-    members.add(new Member("Mathilde", "mth3", "mm@live.dk", "Mathilde", "Rask", "Dovregade", "København S", "2300"));
+    members.add(new Member("Lasse", passwordUsedByAll, "u,mbjsak", "Lasse", "Dall", "Højgade", "København S", "2300"));
+    members.add(new Member("Jørgen", passwordUsedByAll, "uajknhk", "Jørgen", "Jørgensen", "Bredgade", "København K", "2100"));
+    members.add(new Member("Mathilde", passwordUsedByAll, "jhwdk", "Mathilde", "Rask", "Dovregade", "København S", "2300"));
+
+
+
+
 
     List<String> colors = new ArrayList<>();
     List<String> colors1 = new ArrayList<>();
@@ -79,8 +88,30 @@ public class DeveloperData implements ApplicationRunner {
     reservationRepository.save(reservation);
     reservationRepository.save(reservation2);
 
+    setupUserWithRoleUsers();
 
 
+  }
+  private void setupUserWithRoleUsers() {
 
+    System.out.println("******************************************************************************");
+    System.out.println("******* NEVER  COMMIT/PUSH CODE WITH DEFAULT CREDENTIALS FOR REAL ************");
+    System.out.println("******* REMOVE THIS BEFORE DEPLOYMENT, AND SETUP DEFAULT USERS DIRECTLY  *****");
+    System.out.println("**** ** ON YOUR REMOTE DATABASE                 ******************************");
+    System.out.println("******************************************************************************");
+    UserWithRoles user1 = new UserWithRoles("user1", passwordUsedByAll, "user1@a.dk");
+    UserWithRoles user2 = new UserWithRoles("user2", passwordUsedByAll, "user2@a.dk");
+    UserWithRoles user3 = new UserWithRoles("user3", passwordUsedByAll, "user3@a.dk");
+    UserWithRoles user4 = new UserWithRoles("user4", passwordUsedByAll, "user4@a.dk");
+    user1.addRole(Role.USER);
+    user1.addRole(Role.ADMIN);
+    user2.addRole(Role.USER);
+    user3.addRole(Role.ADMIN);
+
+    //No Role assigned to user4
+    userWithRolesRepository.save(user1);
+    userWithRolesRepository.save(user2);
+    userWithRolesRepository.save(user3);
+    userWithRolesRepository.save(user4);
   }
 }

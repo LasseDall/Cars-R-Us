@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import semester3.car.security.entity.UserWithRoles;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,12 +18,10 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Member {
-  @Id
-  private String username;
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_TYPE")
+public class Member extends UserWithRoles {
 
-  private String email;
-  private String password;
   private String firstName;
   private String lastName;
   private String street;
@@ -66,9 +65,7 @@ public class Member {
 
   public Member(String user, String password, String email,
                 String firstName, String lastName, String street, String city, String zip) {
-    this.username = user;
-    this.password = password;
-    this.email = email;
+    super(user,password,email);
     this.firstName = firstName;
     this.lastName = lastName;
     this.street = street;
